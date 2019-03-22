@@ -5,5 +5,5 @@
  */
 public class MysteryProtocol
 {
-
+     //Attributes
 }
