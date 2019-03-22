@@ -6,4 +6,5 @@
 public class HorrorProtocol
 {
      //Attributes
+     String gender;
 }

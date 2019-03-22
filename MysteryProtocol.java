@@ -6,4 +6,5 @@
 public class MysteryProtocol
 {
      //Attributes
+     String gender;
 }

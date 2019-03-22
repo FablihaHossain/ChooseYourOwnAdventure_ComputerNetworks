@@ -7,4 +7,6 @@
 public class ActionProtocol
 {
     //Attributes
+    String gender;
+    
 }
