@@ -50,7 +50,7 @@ public class Server extends Application
 
             try (ServerSocket serverSocket = new ServerSocket(portNumber)) { 
                 while (listening) {
-                    new MultiThreadServer(serverSocket.accept()).start();
+                    new MultiServerThread(serverSocket.accept()).start();
                     launch(args);
                 }
             } catch (IOException e) {
