@@ -41,17 +41,17 @@ public class Server extends Application
         try
         {
             if (args.length != 1) {
-                System.err.println("Usage: java KKMultiServer <port number>");
+                System.err.println("Usage: java MultiServer <port number>");
                 System.exit(1);
             }
             
             int portNumber = Integer.parseInt(args[0]);
             boolean listening = true;
-
+           
             try (ServerSocket serverSocket = new ServerSocket(portNumber)) { 
-                launch(args);
                 while (listening) {
                     new MultiServerThread(serverSocket.accept()).start();
+                    launch(args); //Lauching the GUI application
                 }
             } catch (IOException e) {
                 System.err.println("Could not listen on port " + portNumber);
@@ -96,7 +96,20 @@ public class Server extends Application
 
         //Instruction Label
         Label instruction = new Label("\t\tWelcome! \nPlease Choose A Genre Below:");
-        instruction.setFont(new Font("Helvetica", 25));
+        instruction.setFont(new Font("Helvetica", 30));
+        
+        //Menu Bar
+        MenuBar menuBar = new MenuBar();
+        root.setTop(menuBar);
+
+        //File
+        Menu file = new Menu("File");
+        menuBar.getMenus().add(file);
+
+        //About
+        Menu about = new Menu("About");
+        menuBar.getMenus().add(about);
+
         
         mainStage.show();
     }
