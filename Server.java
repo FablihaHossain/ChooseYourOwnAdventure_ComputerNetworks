@@ -44,10 +44,10 @@ public class Server extends Application
                 System.err.println("Usage: java MultiServer <port number>");
                 System.exit(1);
             }
-            
+
             int portNumber = Integer.parseInt(args[0]);
             boolean listening = true;
-           
+
             try (ServerSocket serverSocket = new ServerSocket(portNumber)) { 
                 while (listening) {
                     new MultiServerThread(serverSocket.accept()).start();
@@ -87,7 +87,7 @@ public class Server extends Application
 
         root.setCenter(centerBox);
         root.setStyle("-fx-font-size: 25"); 
-        
+
         //Grid Pane to organize
         GridPane grid = new GridPane();
         grid.setHgap(10);
@@ -97,7 +97,7 @@ public class Server extends Application
         //Instruction Label
         Label instruction = new Label("\t\tWelcome! \nPlease Choose A Genre Below:");
         instruction.setFont(new Font("Helvetica", 30));
-        
+
         //Menu Bar
         MenuBar menuBar = new MenuBar();
         root.setTop(menuBar);
@@ -110,7 +110,44 @@ public class Server extends Application
         Menu about = new Menu("About");
         menuBar.getMenus().add(about);
 
-        
+        //Quit Functionality
+        MenuItem quit = new MenuItem("Quit Program");
+        file.getItems().add(quit);
+
+        quit.setAccelerator(
+            (new KeyCodeCombination(KeyCode.Q, KeyCombination.CONTROL_DOWN)));
+
+        quit.setGraphic( new ImageView( new Image("icons/door_out.png")));
+        quit.setOnAction( (ActionEvent event) -> System.exit(0));
+
+        //About This Program
+        MenuItem program = new MenuItem("About this program");
+        about.getItems().add(program);
+
+        program.setAccelerator(
+            (new KeyCodeCombination(KeyCode.A, KeyCombination.CONTROL_DOWN)));
+
+        program.setGraphic( new ImageView( new Image("icons/information.png")));
+
+        program.setOnAction(
+            (ActionEvent event) ->
+            {
+                Alert info = new Alert(AlertType.INFORMATION);
+                info.setTitle("About This Program");
+                info.setHeaderText(null);
+
+                //Adding Icons
+                Stage alertStage = (Stage) info.getDialogPane().getScene().getWindow();
+                alertStage.getIcons().add( new Image("icons/key_A.png") );
+
+                //Adding Content
+                info.setContentText("This program simulates a Choose Your Own Adventure Game" +
+                    "\nThe Three Possible Genres: \n\tAction\n\tHorror\n\tMystery" +
+                    "\n\nCreated by Fabliha Hossain");
+                info.showAndWait();
+            }
+        );
+
         mainStage.show();
     }
 }
