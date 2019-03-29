@@ -117,7 +117,7 @@ public class Server extends Application
         quit.setAccelerator(
             (new KeyCodeCombination(KeyCode.Q, KeyCombination.CONTROL_DOWN)));
 
-        quit.setGraphic( new ImageView( new Image("icons/door_out.png")));
+        //quit.setGraphic( new ImageView( new Image("icons/door_out.png")));
         quit.setOnAction( (ActionEvent event) -> System.exit(0));
 
         //About This Program
@@ -127,7 +127,7 @@ public class Server extends Application
         program.setAccelerator(
             (new KeyCodeCombination(KeyCode.A, KeyCombination.CONTROL_DOWN)));
 
-        program.setGraphic( new ImageView( new Image("icons/information.png")));
+        //program.setGraphic( new ImageView( new Image("icons/information.png")));
 
         program.setOnAction(
             (ActionEvent event) ->
@@ -138,7 +138,7 @@ public class Server extends Application
 
                 //Adding Icons
                 Stage alertStage = (Stage) info.getDialogPane().getScene().getWindow();
-                alertStage.getIcons().add( new Image("icons/key_A.png") );
+               // alertStage.getIcons().add( new Image("icons/key_A.png") );
 
                 //Adding Content
                 info.setContentText("This program simulates a Choose Your Own Adventure Game" +
