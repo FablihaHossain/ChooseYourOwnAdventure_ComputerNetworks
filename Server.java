@@ -25,12 +25,12 @@ import javafx.stage.FileChooser.ExtensionFilter;
 import java.net.*;
 import java.io.*;
 /**
- * Computer Networks Project: This is a network application that simulates a 
- *                            create your own adventure game.
+ * Computer Networks Project: The server class includes the GUI code and follows
+ *                            the particular protocol based on client's choice
  * @author Fabliha Hossain
  */
 //Should support multiple users
-public class Server extends Application
+public class Server //extends Application
 {
     //A log file that records the user's choices throughout the game
     File logFile = new File("logFile");
@@ -51,7 +51,7 @@ public class Server extends Application
             try (ServerSocket serverSocket = new ServerSocket(portNumber)) { 
                 while (listening) {
                     new MultiServerThread(serverSocket.accept()).start();
-                    launch(args); //Lauching the GUI application
+                    //launch(args); //Lauching the GUI application
                 }
             } catch (IOException e) {
                 System.err.println("Could not listen on port " + portNumber);
@@ -68,86 +68,86 @@ public class Server extends Application
         }
     }
 
-    //Where the application will be presented in GUI
-    public void start(Stage mainStage)
-    {
-        //Setting up the basic application
-        mainStage.setTitle("Choose Your Own Adventure");
-        VBox centerBox = new VBox();
-        centerBox.setPadding( new Insets(16) );
-        centerBox.setSpacing(16);
-        centerBox.setAlignment( Pos.CENTER );
+    // //Where the application will be presented in GUI
+    // public void start(Stage mainStage)
+    // {
+        // //Setting up the basic application
+        // mainStage.setTitle("Choose Your Own Adventure");
+        // VBox centerBox = new VBox();
+        // centerBox.setPadding( new Insets(16) );
+        // centerBox.setSpacing(16);
+        // centerBox.setAlignment( Pos.CENTER );
 
-        BorderPane root = new BorderPane();
-        Scene mainScene = new Scene(root, 600, 600);
-        mainStage.setScene(mainScene);
+        // BorderPane root = new BorderPane();
+        // Scene mainScene = new Scene(root, 600, 600);
+        // mainStage.setScene(mainScene);
 
-        ScrollPane pane = new ScrollPane();
-        pane.setPrefSize(600,600);
+        // ScrollPane pane = new ScrollPane();
+        // pane.setPrefSize(600,600);
 
-        root.setCenter(centerBox);
-        root.setStyle("-fx-font-size: 25"); 
+        // root.setCenter(centerBox);
+        // root.setStyle("-fx-font-size: 25"); 
 
-        //Grid Pane to organize
-        GridPane grid = new GridPane();
-        grid.setHgap(10);
-        grid.setVgap(10);
-        grid.setAlignment(Pos.CENTER);
+        // //Grid Pane to organize
+        // GridPane grid = new GridPane();
+        // grid.setHgap(10);
+        // grid.setVgap(10);
+        // grid.setAlignment(Pos.CENTER);
 
-        //Instruction Label
-        Label instruction = new Label("\t\tWelcome! \nPlease Choose A Genre Below:");
-        instruction.setFont(new Font("Helvetica", 30));
+        // //Instruction Label
+        // Label instruction = new Label("\t\tWelcome! \nPlease Choose A Genre Below:");
+        // instruction.setFont(new Font("Helvetica", 30));
 
-        //Menu Bar
-        MenuBar menuBar = new MenuBar();
-        root.setTop(menuBar);
+        // //Menu Bar
+        // MenuBar menuBar = new MenuBar();
+        // root.setTop(menuBar);
 
-        //File
-        Menu file = new Menu("File");
-        menuBar.getMenus().add(file);
+        // //File
+        // Menu file = new Menu("File");
+        // menuBar.getMenus().add(file);
 
-        //About
-        Menu about = new Menu("About");
-        menuBar.getMenus().add(about);
+        // //About
+        // Menu about = new Menu("About");
+        // menuBar.getMenus().add(about);
 
-        //Quit Functionality
-        MenuItem quit = new MenuItem("Quit Program");
-        file.getItems().add(quit);
+        // //Quit Functionality
+        // MenuItem quit = new MenuItem("Quit Program");
+        // file.getItems().add(quit);
 
-        quit.setAccelerator(
-            (new KeyCodeCombination(KeyCode.Q, KeyCombination.CONTROL_DOWN)));
+        // quit.setAccelerator(
+            // (new KeyCodeCombination(KeyCode.Q, KeyCombination.CONTROL_DOWN)));
 
-        //quit.setGraphic( new ImageView( new Image("icons/door_out.png")));
-        quit.setOnAction( (ActionEvent event) -> System.exit(0));
+        // //quit.setGraphic( new ImageView( new Image("icons/door_out.png")));
+        // quit.setOnAction( (ActionEvent event) -> System.exit(0));
 
-        //About This Program
-        MenuItem program = new MenuItem("About this program");
-        about.getItems().add(program);
+        // //About This Program
+        // MenuItem program = new MenuItem("About this program");
+        // about.getItems().add(program);
 
-        program.setAccelerator(
-            (new KeyCodeCombination(KeyCode.A, KeyCombination.CONTROL_DOWN)));
+        // program.setAccelerator(
+            // (new KeyCodeCombination(KeyCode.A, KeyCombination.CONTROL_DOWN)));
 
-        //program.setGraphic( new ImageView( new Image("icons/information.png")));
+        // //program.setGraphic( new ImageView( new Image("icons/information.png")));
 
-        program.setOnAction(
-            (ActionEvent event) ->
-            {
-                Alert info = new Alert(AlertType.INFORMATION);
-                info.setTitle("About This Program");
-                info.setHeaderText(null);
+        // program.setOnAction(
+            // (ActionEvent event) ->
+            // {
+                // Alert info = new Alert(AlertType.INFORMATION);
+                // info.setTitle("About This Program");
+                // info.setHeaderText(null);
 
-                //Adding Icons
-                Stage alertStage = (Stage) info.getDialogPane().getScene().getWindow();
-               // alertStage.getIcons().add( new Image("icons/key_A.png") );
+                // //Adding Icons
+                // Stage alertStage = (Stage) info.getDialogPane().getScene().getWindow();
+               // // alertStage.getIcons().add( new Image("icons/key_A.png") );
 
-                //Adding Content
-                info.setContentText("This program simulates a Choose Your Own Adventure Game" +
-                    "\nThe Three Possible Genres: \n\tAction\n\tHorror\n\tMystery" +
-                    "\n\nCreated by Fabliha Hossain");
-                info.showAndWait();
-            }
-        );
+                // //Adding Content
+                // info.setContentText("This program simulates a Choose Your Own Adventure Game" +
+                    // "\nThe Three Possible Genres: \n\tAction\n\tHorror\n\tMystery" +
+                    // "\n\nCreated by Fabliha Hossain");
+                // info.showAndWait();
+            // }
+        // );
 
-        mainStage.show();
-    }
+        // mainStage.show();
+    // }
 }
