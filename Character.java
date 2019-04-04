@@ -1,0 +1,62 @@
+
+/**
+ * A class that represents a character object that will be used during the game
+ *
+ * @author Fabliha Hossain
+ */
+public class Character
+{
+    //Character Attributes
+    private String name;
+    private String gender;
+    private char genreChoosen;
+    private String[] inventory;
+
+    //Constructor
+    public Character(String name, String gender, char genre)
+    {
+        this.name = name;
+        this.gender = gender;
+        this.genreChoosen = genre;
+    }
+
+    //A method to fill the user's inventory with intial items based on the genre choosen
+    private void intialInventory(char genre)
+    {
+        //Filling bag based on genre choosen
+        if(genre == 'A')
+        {
+            //to be filled later
+        }
+        else if(genre == 'M')
+        {
+            //to be filled later
+        }
+        else
+        {
+            //to be filled later
+        }
+    }
+    
+    //Getter and setter methods
+    public String getName()
+    {
+        return this.name;
+    }
+    
+    public String getGender()
+    {
+        return this.gender;
+    }
+    
+    public void setName(String n)
+    {
+        this.name = n;
+    }
+    
+    public void setGender(String g)
+    {
+        this.gender = g;
+    }
+    
+}
