@@ -1,9 +1,3 @@
-------------------------------------------------------------------------
-This is the project README file. Here, you should describe your project.
-Tell the reader (someone who does not know anything about this project)
-all he/she needs to know. The comments should usually include at least:
-------------------------------------------------------------------------
-
 PROJECT TITLE: Choose Your Own Adventure
 PURPOSE OF PROJECT: This network application will simulate a game where a user
 can create a character and create a story for that character based on their choices.
