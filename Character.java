@@ -11,6 +11,7 @@ public class Character
     private String gender;
     private char genreChoosen;
     private String[] inventory;
+    private int numOfItems = 0;
 
     //Constructor
     public Character(String name, String gender, char genre)
@@ -59,4 +60,10 @@ public class Character
         this.gender = g;
     }
     
+    //Method to add to inventory
+    public void addInventory(String item)
+    {
+        inventory[numOfItems] = item;
+        numOfItems++;
+    }
 }
