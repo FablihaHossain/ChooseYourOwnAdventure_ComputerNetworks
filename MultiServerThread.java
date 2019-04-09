@@ -18,8 +18,7 @@ public class MultiServerThread extends Thread {
         PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
         BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         ) {
-            //Welcome Message
-            System.out.println("Welcome to the Game!");
+            //Displaying Genre Options 
             System.out.println("Action Adventure Description here");
             System.out.println("Mystery Adventure Description here");
             System.out.println("Horror Adventure Description here");
