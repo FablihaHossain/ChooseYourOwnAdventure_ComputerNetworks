@@ -51,6 +51,7 @@ public class Server //extends Application
             try (ServerSocket serverSocket = new ServerSocket(portNumber)) { 
                 while (listening) {
                     new MultiServerThread(serverSocket.accept()).start();
+                    System.out.println("connected");
                     //launch(args); //Lauching the GUI application
                 }
             } catch (IOException e) {

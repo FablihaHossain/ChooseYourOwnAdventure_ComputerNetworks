@@ -25,10 +25,25 @@ public class Client //One client class for each user
         BufferedReader in = new BufferedReader(
                 new InputStreamReader(kkSocket.getInputStream()));
         ) {
+            //Option to read from the keyboard
+            BufferedReader stdIn =
+                new BufferedReader(new InputStreamReader(System.in));
+               
+            //Displaying the options for the client    
             System.out.println("Welcome to the Game!\nPlease Choose a Genre Below");
             System.out.println("Action Adventure\nHorror Adventure\nMystery Adventure");
-            String genreChoice = in.readLine();
-            while (true);
+            
+            //Reading in Client's choice
+            String genreChoice = stdIn.readLine();
+            if(genreChoice != null)
+            {
+                //Confirming client's choice
+                System.out.println("You choose: " + genreChoice);
+                
+                //Sending the choice to client
+                out.println(genreChoice);
+                System.out.println("sent to server");
+            }
         }
         catch (UnknownHostException e) {
             System.err.println("Don't know about host " + hostName);

@@ -16,13 +16,18 @@ public class MultiServerThread extends Thread {
     public void run() {
         try (
         PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-        BufferedReader in = new BufferedReader(
-                new InputStreamReader(
-                    socket.getInputStream()));
+        BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         ) {
+            //Welcome Message
+            System.out.println("Welcome to the Game!");
+            System.out.println("Action Adventure Description here");
+            System.out.println("Mystery Adventure Description here");
+            System.out.println("Horror Adventure Description here");
+            
+            //Variables to be used
             String inputLine;
             String outputLine;
-
+            
             //Calling the correct protocol
             while((inputLine = in.readLine()) != null)
             {
@@ -30,19 +35,22 @@ public class MultiServerThread extends Thread {
                 {
                     ActionProtocol actionGenre = new ActionProtocol();
                     outputLine = actionGenre.processInput(inputLine);
-                    out.println(outputLine);
+                    System.out.println(outputLine);
+                    //out.println(outputLine);
                 }
                 else if(inputLine.equals("Mystery"))
                 {
                     MysteryProtocol mysteryGenre = new MysteryProtocol();
                     outputLine = mysteryGenre.processInput(inputLine);
-                    out.println(outputLine);
+                    System.out.println(outputLine);
+                    //out.println(outputLine);
                 }
                 else if(inputLine.equals("Horror"))
                 {
                     HorrorProtocol horrorGenre = new HorrorProtocol();
                     outputLine = horrorGenre.processInput(inputLine);
-                    out.println(outputLine);
+                    System.out.println(outputLine);
+                    //out.println(outputLine);
                 }
 
                 if (inputLine.equals("Bye"))
