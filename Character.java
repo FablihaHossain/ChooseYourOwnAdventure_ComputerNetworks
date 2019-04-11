@@ -1,10 +1,10 @@
-
+import java.io.Serializable;
 /**
  * A class that represents a character object that will be used during the game
  *
  * @author Fabliha Hossain
  */
-public class Character
+public class Character implements Serializable
 {
     //Character Attributes
     private String name;
@@ -38,28 +38,37 @@ public class Character
             //to be filled later
         }
     }
-    
+
     //Getter and setter methods
     public String getName()
     {
         return this.name;
     }
-    
+
     public String getGender()
     {
         return this.gender;
     }
-    
+
     public void setName(String n)
     {
         this.name = n;
     }
-    
+
     public void setGender(String g)
     {
         this.gender = g;
     }
+
+    public char getGenre()
+    {
+        return this.genreChoosen;
+    }
     
+    public void setGenre(char g)
+    {
+        this.genreChoosen = g;
+    }
     //Method to add to inventory
     public void addInventory(String item)
     {

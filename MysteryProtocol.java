@@ -6,13 +6,23 @@
  */
 public class MysteryProtocol
 {
-     //Attributes
-     String gender;
-     
-     //Method to initiate protocol
-     public String processInput(String input)
-     {
-         String output = "Mystery Protocol";
-         return output;
-     }
+    //Attributes
+    String gender;
+
+    //Status variable 
+    String gameStatus = "Not Started";
+
+    //Method to initiate protocol
+    public String processInput(String input)
+    {
+        String output = "";
+
+        //Character Creation
+        if(gameStatus.equals("Not Started"))
+        {
+            output = "Please Create Your Character";
+            gameStatus = "CharacterCreated";
+        }
+        return output;
+    }
 }
