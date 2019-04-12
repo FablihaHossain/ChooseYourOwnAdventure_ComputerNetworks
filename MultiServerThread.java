@@ -33,6 +33,7 @@ public class MultiServerThread extends Thread {
             
             //while((inputLine = in.readLine()) != null || (inputLine = (Character)inObject.readObject()) != null)
             //{
+            //Reading in the user's genre choice
             inputLine = in.readLine();
 
             //Character Creation
@@ -45,6 +46,8 @@ public class MultiServerThread extends Thread {
                 ActionProtocol actionGenre = new ActionProtocol();
                 outputLine = actionGenre.processInput(inputLine, character);
                 System.out.println(outputLine);
+                System.out.println("Your Character Name is: " + character.getName());
+                System.out.println("Your Character Gender is: " + character.getGender());
                 //out.println(outputLine);
             }
             else if(inputLine.equals("Mystery"))

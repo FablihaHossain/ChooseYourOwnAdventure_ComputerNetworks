@@ -10,25 +10,18 @@ public class MysteryProtocol
     String gender;
 
     //Status variable 
-    String gameStatus = "Not Started";
+    String gameStatus = "Start Game";
 
     //Method to initiate protocol
     public String processInput(String input, Character character)
     {
         String output = "";
-
-        //Character Creation
-        if(gameStatus.equals("Not Started"))
+        if(gameStatus.equals("Start Game"))
         {
-
-        }
-        else if(gameStatus.equals(""))
-        {
-            
-        }
-        else
-        {
-            
+            output = "Welcome to a new mystery adventure. Your character " + character.getName() +
+                      " is a " + character.getGender() + " lead detective that just recieved an " +
+                      " unusual case. Please choose which unit you would like to be a part of \n" +
+                      "Federal Bureau of Investigations or New York Police Department";   
         }
         return output;
     }

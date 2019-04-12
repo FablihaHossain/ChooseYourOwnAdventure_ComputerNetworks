@@ -14,14 +14,7 @@ public class HorrorProtocol
      //Method to initiate protocol
      public String processInput(String input, Character character)
      {
-         String output = "";
-         
-         //Character Creation
-        if(gameStatus.equals("Not Started"))
-        {
-
-        }
-        
-         return output;
+        String output = "Horror Adventure Starting Prompt Here";     
+        return output;
      }
 }

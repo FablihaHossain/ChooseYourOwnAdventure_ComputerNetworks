@@ -15,14 +15,8 @@ public class ActionProtocol
     //Method to initiate protocol
      public String processInput(String input, Character character)
      {
-         String output = "";
+         String output = "Action Adventure Starting Prompt Here";
          
-         //Character Creation
-        if(gameStatus.equals("Not Started"))
-        {
-
-        }
-        
          return output;
      }
 }
