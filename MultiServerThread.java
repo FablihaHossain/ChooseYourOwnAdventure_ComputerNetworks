@@ -18,7 +18,7 @@ public class MultiServerThread extends Thread {
         PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
         BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         //Option to read in objects
-            ObjectInputStream inObject = new ObjectInputStream((socket.getInputStream()));
+        ObjectInputStream inObject = new ObjectInputStream((socket.getInputStream()));
         ) {
             //Displaying Genre Options 
             System.out.println("Action Adventure Description here");
@@ -28,30 +28,36 @@ public class MultiServerThread extends Thread {
             //Variables to be used
             String inputLine;
             String outputLine;
-            Character characterInputLine;
+            Character character;
 
-            //Calling the correct protocol
+            
             //while((inputLine = in.readLine()) != null || (inputLine = (Character)inObject.readObject()) != null)
             //{
             inputLine = in.readLine();
+
+            //Character Creation
+            System.out.println("Please Create Your Character");
+            character = (Character)inObject.readObject();
+
+            //Calling the correct protocol
             if(inputLine.equals("Action"))
             {
                 ActionProtocol actionGenre = new ActionProtocol();
-                outputLine = actionGenre.processInput(inputLine);
+                outputLine = actionGenre.processInput(inputLine, character);
                 System.out.println(outputLine);
                 //out.println(outputLine);
             }
             else if(inputLine.equals("Mystery"))
             {
                 MysteryProtocol mysteryGenre = new MysteryProtocol();
-                outputLine = mysteryGenre.processInput(inputLine);
+                outputLine = mysteryGenre.processInput(inputLine, character);
                 System.out.println(outputLine);
                 //out.println(outputLine);
             }
             else if(inputLine.equals("Horror"))
             {
                 HorrorProtocol horrorGenre = new HorrorProtocol();
-                outputLine = horrorGenre.processInput(inputLine);
+                outputLine = horrorGenre.processInput(inputLine, character);
                 System.out.println(outputLine);
                 //out.println(outputLine);
             }
@@ -60,9 +66,6 @@ public class MultiServerThread extends Thread {
                 System.out.println("Error...");
             }
 
-            //Character Creation
-            characterInputLine = (Character)inObject.readObject();
-            
             // if (inputLine.equals("Bye"))
             // break;
             //}
@@ -70,7 +73,7 @@ public class MultiServerThread extends Thread {
         } catch (IOException e) {
             e.printStackTrace();
         }
-                catch(Exception e)
+        catch(Exception e)
         {
             e.printStackTrace();
         }

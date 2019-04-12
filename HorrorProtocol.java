@@ -12,15 +12,14 @@ public class HorrorProtocol
      //Status variable 
      String gameStatus = "Not Started";
      //Method to initiate protocol
-     public String processInput(String input)
+     public String processInput(String input, Character character)
      {
          String output = "";
          
          //Character Creation
         if(gameStatus.equals("Not Started"))
         {
-            output = "Please Create Your Character";
-            gameStatus = "CharacterCreated";
+
         }
         
          return output;

@@ -28,32 +28,44 @@ public class Client //One client class for each user
             //Option to read from the keyboard
             BufferedReader stdIn =
                 new BufferedReader(new InputStreamReader(System.in));
-            
+
             //Option to send objects
             ObjectOutputStream outObject = new ObjectOutputStream(kkSocket.getOutputStream());
-            
+
             //Displaying the options for the client    
             System.out.println("Welcome to the Game!\nPlease Choose a Genre Below");
             System.out.println("Action Adventure\nHorror Adventure\nMystery Adventure");
-            
+
             //Initial Character Object
             Character character = new Character(null, null, 'G');
-            
+
             //Reading in Client's choice
             String genreChoice = stdIn.readLine();
             if(genreChoice != null)
             {
                 //Confirming client's choice
                 System.out.println("You choose: " + genreChoice);
-                
+
                 //Sending the choice to client
                 out.println(genreChoice);
                 System.out.println("sent to server");
             }
-            else //Genre has been choosen and now character must be created
-            {
-                //Client chooses certain attributes of their character
-            }
+
+            //Genre has been choosen and now character must be created
+            //Client chooses certain attributes of their character
+            System.out.println("Please Input Your Character's Name");
+            String name = stdIn.readLine();
+
+            System.out.println("Please Choose Your Character's Gender: Female, Male, or Genderqueer");
+            String gender = stdIn.readLine();
+
+            //Updating the character object
+            character.setName(name);
+            character.setGender(gender);
+            character.setGenre(genreChoice.charAt(0));
+            
+            //Sending the character object to the server
+            outObject.writeObject(character);
         }
         catch (UnknownHostException e) {
             System.err.println("Don't know about host " + hostName);
