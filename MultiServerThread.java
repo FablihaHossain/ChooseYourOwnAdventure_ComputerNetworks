@@ -30,7 +30,6 @@ public class MultiServerThread extends Thread {
             String outputLine;
             Character character;
 
-            
             //while((inputLine = in.readLine()) != null || (inputLine = (Character)inObject.readObject()) != null)
             //{
             //Reading in the user's genre choice
@@ -41,6 +40,7 @@ public class MultiServerThread extends Thread {
             character = (Character)inObject.readObject();
 
             //Calling the correct protocol
+
             if(inputLine.equals("Action"))
             {
                 ActionProtocol actionGenre = new ActionProtocol();
@@ -71,7 +71,7 @@ public class MultiServerThread extends Thread {
 
             // if (inputLine.equals("Bye"))
             // break;
-            //}
+            // }
             socket.close();
         } catch (IOException e) {
             e.printStackTrace();
