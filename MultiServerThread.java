@@ -22,7 +22,7 @@ public class MultiServerThread extends Thread {
         ) {
             //Displaying Genre Options 
             System.out.println("Action Adventure Description here");
-            System.out.println("Mystery Adventure Description here");
+            System.out.println("Mystery Adventure:Case will involve a couple that claim to be the new and improved version of Bonnie and Clyde");
             System.out.println("Horror Adventure Description here");
 
             //Variables to be used
@@ -40,7 +40,7 @@ public class MultiServerThread extends Thread {
             character = (Character)inObject.readObject();
 
             //Calling the correct protocol
-
+            //while((inputLine = in.readLine()) != null 
             if(inputLine.equals("Action"))
             {
                 ActionProtocol actionGenre = new ActionProtocol();
