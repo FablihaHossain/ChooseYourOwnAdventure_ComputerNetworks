@@ -22,8 +22,11 @@ public class MultiServerThread extends Thread {
         ) {
             //Displaying Genre Options 
             System.out.println("Action Adventure Description here");
-            System.out.println("Mystery Adventure:Case will involve a couple that claim to be the new and improved version of Bonnie and Clyde");
+            ActionProtocol actionGenre = new ActionProtocol(); //Action Protocol
+            System.out.println("Mystery Adventure: Case will involve a couple that claim to be the new and improved version of Bonnie and Clyde");
+            MysteryProtocol mysteryGenre = new MysteryProtocol(); //Mystery Protocol
             System.out.println("Horror Adventure Description here");
+            HorrorProtocol horrorGenre = new HorrorProtocol(); //Horror Protocol
 
             //Variables to be used
             String inputLine;
@@ -40,38 +43,38 @@ public class MultiServerThread extends Thread {
             character = (Character)inObject.readObject();
 
             //Calling the correct protocol
-            //while((inputLine = in.readLine()) != null 
-            if(inputLine.equals("Action"))
+            while((inputLine = in.readLine()) != null)
             {
-                ActionProtocol actionGenre = new ActionProtocol();
-                outputLine = actionGenre.processInput(inputLine, character);
-                System.out.println(outputLine);
-                System.out.println("Your Character Name is: " + character.getName());
-                System.out.println("Your Character Gender is: " + character.getGender());
-                //out.println(outputLine);
-            }
-            else if(inputLine.equals("Mystery"))
-            {
-                MysteryProtocol mysteryGenre = new MysteryProtocol();
-                outputLine = mysteryGenre.processInput(inputLine, character);
-                System.out.println(outputLine);
-                //out.println(outputLine);
-            }
-            else if(inputLine.equals("Horror"))
-            {
-                HorrorProtocol horrorGenre = new HorrorProtocol();
-                outputLine = horrorGenre.processInput(inputLine, character);
-                System.out.println(outputLine);
-                //out.println(outputLine);
-            }
-            else
-            {
-                System.out.println("Error...");
-            }
+                //System.out.println("Your Character Name is: " + character.getName());
+                //System.out.println("Your Character Gender is: " + character.getGender());
+                if(character.getGenre() == 'A')
+                {
+                    outputLine = actionGenre.processInput(inputLine, character);
+                    //out.println(outputLine);
+                }
+                else if(character.getGenre() == 'M')
+                {
+                    outputLine = mysteryGenre.processInput(inputLine, character);
+                    System.out.println(outputLine);
+                    //out.println("first");
+                    out.println(outputLine);
+                    //out.println("last");
+                    System.out.println();
+                }
+                else if(character.getGenre() == 'H')
+                {
+                    outputLine = horrorGenre.processInput(inputLine, character);
+                    System.out.println(outputLine);
+                    //out.println(outputLine);
+                }
+                else
+                {
+                    System.out.println("Error...");
+                }
 
-            // if (inputLine.equals("Bye"))
-            // break;
-            // }
+                if (inputLine.equals("Bye"))
+                    break;
+            }
             socket.close();
         } catch (IOException e) {
             e.printStackTrace();

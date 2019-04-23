@@ -57,7 +57,7 @@ public class MysteryProtocol
             {
                 output = "You talk to a few people. Some reported that they were so scared that they didn’t get a good look " +
                 "at the two shooters. They only got bits and pieces of their looks and character. After asking around, you " +
-                "gathered a preliminary profile of the two. Do you look around for more clues or go back to headquarters?";
+                "gathered a preliminary profile of the two. Do you look around for more clues (A) or go back to headquarters (B)?";
                 gameStatus = "Scenario Two";
             }
             else if(input.equals("B"))
@@ -66,7 +66,7 @@ public class MysteryProtocol
                 "were told that the couple fled from. Just when you think you couldn’t find anything, you feel something at " +
                 "the bottom of your foot. You look down and see that there is a red jeweled earring on the ground. " +
                 "After asking around, you conclude that belongs to the female. " +
-                "Do you look around for more clues or go back to headquarters?";
+                "Do you look around for more clues (A) or go back to headquarters (B)?";
                 gameStatus = "Scenario Two";
             }
             else
@@ -173,17 +173,46 @@ public class MysteryProtocol
             }
             else if(input.equals("Y"))
             {
-                gameStatus = "Scenario Four";
+                gameStatus = "Scenario Five";
             }
             else
             {
                 output += "Invalid Input";
             }
         }
-        // else if(gameStatus.equals("Scenario Five"))
-        // {
-
-        // }
+        else if(gameStatus.equals("Scenario Five"))
+        {
+            output = "You arrive back at headquarters and get a clue about the vehicle that Clive drives. It is a 2000 red jeep " +
+            "and your team managed to track the license plate. You send an immediate amber alert for the car. Soon enough, you get " +
+            "word that the car was spotted somewhere near Lake George, New York. " +
+            "Do you go there yourself (A) or take some team members with you (B)?";
+            gameStatus = "Last Scene";
+        }
+        else if(gameStatus.equals("Last Scene"))
+        {
+            if(input.equals("A"))
+            {
+                output = "Going by yourself is never a good idea. You arrive at the scene and Clive immediately notices your uniform. "+
+                "He pulls the trigger and drives away. You are dead. Game Over.";
+                gameStatus = "End Game";
+            }
+            else if(input.equals("B"))
+            {
+                output = "Taking a few team members: You arrive at the scene with your team members. You all come up with a plan to " +
+                "surround them. As soon as you do, you threaten them to come out of the car peacefully or you’ll shot. They both slowly " +
+                "get out of the car, and put their hands up. You’ve finally arrested Clive Adams and Bonny Winterbottom. "+
+                "Congratulations another case solved.";
+                gameStatus = "End Game";
+            }
+            else
+            {
+                output = "Invalid Input";
+            }
+        }
+        else
+        {
+            output = "The game is over.";
+        }
         return output;
     }
 }

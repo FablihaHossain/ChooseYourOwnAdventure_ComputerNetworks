@@ -66,6 +66,15 @@ public class Client //One client class for each user
             
             //Sending the character object to the server
             outObject.writeObject(character);
+            
+            //Playing the game
+            System.out.println("Ready to Play the game?");
+            String input;
+            while((input = stdIn.readLine()) != null)
+            {
+                out.println(input);
+                System.out.println("sent to server");
+            }
         }
         catch (UnknownHostException e) {
             System.err.println("Don't know about host " + hostName);
