@@ -22,7 +22,7 @@ public class MysteryProtocol
         {
             output = "Welcome to a new mystery adventure. Your character " + character.getName() +
             " is a " + character.getGender() + " lead detective that just recieved an " +
-            " unusual case. Please choose which unit you would like to be a part of \n" +
+            " unusual case. Please choose which unit you would like to be a part of " +
             "Federal Bureau of Investigations (FBI) or New York Police Department (NYPD)";   
 
             //Updating Game Status
@@ -133,6 +133,7 @@ public class MysteryProtocol
             else if(input.equals("A"))
             {
                 gameStatus = "Scenario Four";
+                output = "Type (Y) to continue";
             }
             else if(input.equals("B"))
             {

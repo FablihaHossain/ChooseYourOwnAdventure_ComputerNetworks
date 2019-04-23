@@ -54,10 +54,10 @@ public class MultiServerThread extends Thread {
                 }
                 else if(character.getGenre() == 'M')
                 {
+                    System.out.println("User Choose: " + inputLine);
                     outputLine = mysteryGenre.processInput(inputLine, character);
-                    System.out.format(outputLine);
-                    //out.println("first");
                     out.println(outputLine);
+                    //out.println("first");
                     //out.println("last");
                     System.out.println();
                 }

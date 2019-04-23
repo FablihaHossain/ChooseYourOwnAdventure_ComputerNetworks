@@ -74,6 +74,8 @@ public class Client //One client class for each user
             {
                 out.println(input);
                 System.out.println("sent to server");
+                String output = in.readLine();
+                System.out.println(output);
             }
         }
         catch (UnknownHostException e) {
