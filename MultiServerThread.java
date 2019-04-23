@@ -55,7 +55,7 @@ public class MultiServerThread extends Thread {
                 else if(character.getGenre() == 'M')
                 {
                     outputLine = mysteryGenre.processInput(inputLine, character);
-                    System.out.println(outputLine);
+                    System.out.format(outputLine);
                     //out.println("first");
                     out.println(outputLine);
                     //out.println("last");
