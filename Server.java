@@ -10,9 +10,6 @@ import java.io.*;
 //Should support multiple users
 public class Server
 {
-    //A log file that records the user's choices throughout the game
-    File logFile = new File("logFile");
-
     //Overriding Abstract method for Application Class
     public static void main(String[] args) 
     {

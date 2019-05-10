@@ -30,6 +30,13 @@ import java.net.*;
  */
 public class Client extends Application //One client class for each user
 {
+    //A log file that records the user's choices throughout the game
+    File logFile = new File("logFile");
+
+    //The host name and port number that the client connects to in order to play the game
+    //Note: This is here so that we can call the playGame method in GUI without passing parameters
+    static String hostName;
+    static int portNumber;
     public static void main(String args[]) throws IOException
     {
         if (args.length != 2) {
@@ -39,14 +46,21 @@ public class Client extends Application //One client class for each user
         }
         //Client is going to initiate a connection request to the server's 
         //IP address and port
-        String hostName = args[0];
-        int portNumber = Integer.parseInt(args[1]);
+        hostName = args[0];
+        portNumber = Integer.parseInt(args[1]);
 
-        playGame(hostName, portNumber);
-        //launch(args); //Lauching the GUI application
+        //Lauching the GUI application
+        launch(args); 
     }
-    public static void playGame(String hostName, int portNumber)
+
+    /**
+     * playGamePrototype The method that has the rapid prototype code where the client and server simply
+     * exchange messages
+     */
+    public void playGamePrototype()
     {
+        String hostName = getHostName();
+        int portNumber = getPortNumber();
         try (
         Socket kkSocket = new Socket(hostName, portNumber);
         PrintWriter out = new PrintWriter(kkSocket.getOutputStream(), true);
@@ -116,7 +130,54 @@ public class Client extends Application //One client class for each user
         }
     }
 
-    //Where the application will be presented in GUI
+    /**
+     * playGame The Method that implements the GUI enhancements
+     * User is able to play the game, and save their progress through the log files
+     */
+    public void playGame(Character character)
+    {
+        String hostName = getHostName();
+        int portNumber = getPortNumber();
+        try (
+        Socket kkSocket = new Socket(hostName, portNumber);
+        PrintWriter out = new PrintWriter(kkSocket.getOutputStream(), true);
+        BufferedReader in = new BufferedReader(
+                new InputStreamReader(kkSocket.getInputStream()));
+        ) {
+            //Option to send objects
+            ObjectOutputStream outObject = new ObjectOutputStream(kkSocket.getOutputStream());
+
+            //Option to read from the keyboard
+            BufferedReader stdIn =
+                new BufferedReader(new InputStreamReader(System.in));
+
+            //Sending the character object to the server
+            outObject.writeObject(character);
+            
+
+            // //Playing the game
+            // System.out.println("Ready to Play the game?");
+            // String input;
+            // while((input = stdIn.readLine()) != null)
+            // {
+                // out.println(input);
+                // String output = in.readLine();
+                // System.out.println(output);
+            // }
+        }
+        catch (UnknownHostException e) {
+            System.err.println("Don't know about host " + hostName);
+            System.exit(1);
+        } catch (IOException e) {
+            System.err.println("Couldn't get I/O for the connection to " +
+                hostName);
+            System.exit(1);
+        }
+    }
+
+    /**
+     * The Graphical User Interface Application code
+     */
     public void start(Stage mainStage)
     {
         //Setting up the basic application
@@ -143,12 +204,49 @@ public class Client extends Application //One client class for each user
         grid.setAlignment(Pos.CENTER);
 
         //Instruction Label
-        Label instruction = new Label("\t\tWelcome to the Game! \nPlease Choose A Genre Below:");
-        instruction.setFont(new Font("Helvetica", 30));
+        Label instruction = new Label("\tWelcome to the Game! \nLet's Create Your Character:");
+        instruction.setFont(new Font("Helvetica", 25));
 
+        //Character Name in Text Field
+        Label characterName = new Label("Enter Your Character's Name:");
+        TextField nameField = new TextField();
+
+        grid.add(characterName, 0, 1);
+        grid.add(nameField, 0, 2);
+
+        //Character Gender in Radio Button
+        ToggleGroup gender = new ToggleGroup();
+        RadioButton male = new RadioButton("Male");
+        RadioButton female = new RadioButton("Female");
+        RadioButton genderQueer = new RadioButton("Gender Queer");
+
+        male.setToggleGroup(gender);
+        female.setToggleGroup(gender);
+        genderQueer.setToggleGroup(gender);
+
+        //An HBox to add it the application
+        HBox mOrF = new HBox(male, female, genderQueer);
+        grid.add(mOrF, 0, 4);
+
+        //Creating the character
+        String charName = nameField.getText();  //SHOULD HAVE SCENARIO IN CASE LEFT BLANK
+        String charGender;
+        if(male.isSelected())
+        {
+            charGender = "male";
+        }
+        else if(female.isSelected())
+        {
+            charGender = "female";
+        }
+        else
+        {
+            charGender = "gender queer";
+        }
+        
         //Horror Button
         Button horrorButton = new Button("Horror");
-        grid.add(horrorButton, 1, 4);
+        grid.add(horrorButton, 0, 9);
 
         horrorButton.setOnAction(
             (ActionEvent event) ->
@@ -156,14 +254,20 @@ public class Client extends Application //One client class for each user
                 //Removing the buttons and pictures from the main scene
                 grid.getChildren().clear();
 
+                //Creating character object
+                Character character = new Character(charName, charGender, 'H');
+
                 //Updating the instruction Label
                 instruction.setText("Welcome to the Horror Adventure");
-                root.setStyle("-fx-font-size: 15");
+                root.setStyle("-fx-font-size: 15");  
+
+                //Playing the game
+                playGame(character);
             }
         );
         //Mystery Button
         Button mysteryButton = new Button("Mystery");
-        grid.add(mysteryButton, 2, 2);
+        grid.add(mysteryButton, 0, 8);
 
         //Creating the Mystery Story
         mysteryButton.setOnAction(
@@ -172,9 +276,15 @@ public class Client extends Application //One client class for each user
                 //Removing the buttons and pictures from the main scene
                 grid.getChildren().clear();
 
+                //Creating character object
+                Character character = new Character(charName, charGender, 'M');
+                
                 //Updating the instruction Label
                 instruction.setText("Welcome to the Mystery Adventure");
                 root.setStyle("-fx-font-size: 15");
+
+                //Playing the game
+                playGame(character);
             }
         );
         //Menu Bar
@@ -229,6 +339,16 @@ public class Client extends Application //One client class for each user
 
         centerBox.getChildren().addAll(instruction, grid);
         mainStage.show();
+    }
+
+    public static String getHostName()
+    {
+        return hostName;
+    }
+
+    public static int getPortNumber()
+    {
+        return portNumber;
     }
 }
 

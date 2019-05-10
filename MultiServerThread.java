@@ -20,12 +20,10 @@ public class MultiServerThread extends Thread {
         //Option to read in objects
         ObjectInputStream inObject = new ObjectInputStream((socket.getInputStream()));
         ) {
-            //Displaying Genre Options 
-            System.out.println("Action Adventure Description here");
-            ActionProtocol actionGenre = new ActionProtocol(); //Action Protocol
-            System.out.println("Mystery Adventure: Case will involve a couple that claim to be the new and improved version of Bonnie and Clyde");
+            // //Displaying Genre Options 
+            // System.out.println("Mystery Adventure: Case will involve a couple that claim to be the new and improved version of Bonnie and Clyde");
             MysteryProtocol mysteryGenre = new MysteryProtocol(); //Mystery Protocol
-            System.out.println("Horror Adventure Description here");
+            // System.out.println("Horror Adventure Description here");
             HorrorProtocol horrorGenre = new HorrorProtocol(); //Horror Protocol
 
             //Variables to be used
@@ -47,12 +45,7 @@ public class MultiServerThread extends Thread {
             {
                 //System.out.println("Your Character Name is: " + character.getName());
                 //System.out.println("Your Character Gender is: " + character.getGender());
-                if(character.getGenre() == 'A')
-                {
-                    outputLine = actionGenre.processInput(inputLine, character);
-                    //out.println(outputLine);
-                }
-                else if(character.getGenre() == 'M')
+                if(character.getGenre() == 'M')
                 {
                     System.out.println("User Choose: " + inputLine);
                     outputLine = mysteryGenre.processInput(inputLine, character);
