@@ -136,8 +136,10 @@ public class Client extends Application //One client class for each user
      */
     public void playGame(Character character)
     {
+        //Getting the host name and port number of the server
         String hostName = getHostName();
         int portNumber = getPortNumber();
+
         try (
         Socket kkSocket = new Socket(hostName, portNumber);
         PrintWriter out = new PrintWriter(kkSocket.getOutputStream(), true);
@@ -153,16 +155,15 @@ public class Client extends Application //One client class for each user
 
             //Sending the character object to the server
             outObject.writeObject(character);
-            
 
             // //Playing the game
             // System.out.println("Ready to Play the game?");
             // String input;
             // while((input = stdIn.readLine()) != null)
             // {
-                // out.println(input);
-                // String output = in.readLine();
-                // System.out.println(output);
+            // out.println(input);
+            // String output = in.readLine();
+            // System.out.println(output);
             // }
         }
         catch (UnknownHostException e) {
@@ -243,7 +244,7 @@ public class Client extends Application //One client class for each user
         {
             charGender = "gender queer";
         }
-        
+
         //Horror Button
         Button horrorButton = new Button("Horror");
         grid.add(horrorButton, 0, 9);
@@ -278,7 +279,7 @@ public class Client extends Application //One client class for each user
 
                 //Creating character object
                 Character character = new Character(charName, charGender, 'M');
-                
+
                 //Updating the instruction Label
                 instruction.setText("Welcome to the Mystery Adventure");
                 root.setStyle("-fx-font-size: 15");

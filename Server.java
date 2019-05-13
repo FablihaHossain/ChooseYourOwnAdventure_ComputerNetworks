@@ -25,8 +25,6 @@ public class Server
             try (ServerSocket serverSocket = new ServerSocket(portNumber)) { 
                 while (listening) {
                     new MultiServerThread(serverSocket.accept()).start();
-                    //Welcome Message
-                    //System.out.println("Welcome to the Game!");
                 }
             } catch (IOException e) {
                 System.err.println("Could not listen on port " + portNumber);

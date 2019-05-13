@@ -36,15 +36,16 @@ public class MultiServerThread extends Thread {
             //Reading in the user's genre choice
             inputLine = in.readLine();
 
-            //Character Creation
-            System.out.println("Please Create Your Character");
+            //Character Object
+            //System.out.println("Please Create Your Character");
+            System.out.println("tes0");
             character = (Character)inObject.readObject();
+            System.out.println("Test1");
+            System.out.println(character.getName());
 
             //Calling the correct protocol
             while((inputLine = in.readLine()) != null)
             {
-                //System.out.println("Your Character Name is: " + character.getName());
-                //System.out.println("Your Character Gender is: " + character.getGender());
                 if(character.getGenre() == 'M')
                 {
                     System.out.println("User Choose: " + inputLine);
