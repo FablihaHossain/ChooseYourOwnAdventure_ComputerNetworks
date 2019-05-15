@@ -69,6 +69,13 @@ public class Character implements Serializable
     {
         this.genreChoosen = g;
     }
+    
+    public String toString()
+    {
+        String output = "Character Name: " + this.name + "\nCharacter Gender: " + this.gender + "\nGenre Choosen: " +
+        this.genreChoosen;
+        return output;
+    }
     //Method to add to inventory
     public void addInventory(String item)
     {

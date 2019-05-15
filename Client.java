@@ -20,6 +20,7 @@ import javafx.geometry.*;
 import java.io.*;
 import java.util.*;
 
+import javax.swing.JOptionPane;
 import java.io.*;
 import java.net.*;
 /**
@@ -33,6 +34,7 @@ public class Client extends Application //One client class for each user
     //A log file that records the user's choices throughout the game
     File logFile = new File("logFile");
 
+    String clientInput;
     //The host name and port number that the client connects to in order to play the game
     //Note: This is here so that we can call the playGame method in GUI without passing parameters
     static String hostName;
@@ -59,6 +61,8 @@ public class Client extends Application //One client class for each user
      */
     public void playGamePrototype()
     {
+        //Output value to display on the GUI application
+        //String output = "Play game";
         String hostName = getHostName();
         int portNumber = getPortNumber();
         try (
@@ -66,7 +70,7 @@ public class Client extends Application //One client class for each user
         PrintWriter out = new PrintWriter(kkSocket.getOutputStream(), true);
         BufferedReader in = new BufferedReader(
                 new InputStreamReader(kkSocket.getInputStream()));
-        ) {
+        ) {         
             //Option to read from the keyboard
             BufferedReader stdIn =
                 new BufferedReader(new InputStreamReader(System.in));
@@ -118,6 +122,7 @@ public class Client extends Application //One client class for each user
                 // System.out.println("sent to server");
                 String output = in.readLine();
                 System.out.println(output);
+                //return output;
             }
         }
         catch (UnknownHostException e) {
@@ -128,6 +133,7 @@ public class Client extends Application //One client class for each user
                 hostName);
             System.exit(1);
         }
+        //return output;
     }
 
     /**
@@ -154,17 +160,22 @@ public class Client extends Application //One client class for each user
                 new BufferedReader(new InputStreamReader(System.in));
 
             //Sending the character object to the server
+            System.out.println(character.toString());
+            outObject.reset();
             outObject.writeObject(character);
+            System.out.println("sent to server:");
 
-            // //Playing the game
-            // System.out.println("Ready to Play the game?");
-            // String input;
-            // while((input = stdIn.readLine()) != null)
-            // {
-            // out.println(input);
-            // String output = in.readLine();
-            // System.out.println(output);
-            // }
+            //Playing the game
+            //System.out.println("Ready to Play the game?");
+            String input = clientInput;
+            //while(!(input = getInput()).equals(null))
+            while(input != null)
+            {
+                out.println(input);
+                String output = in.readLine();
+                System.out.println(output);
+                input = getInput();
+            }
         }
         catch (UnknownHostException e) {
             System.err.println("Don't know about host " + hostName);
@@ -174,6 +185,18 @@ public class Client extends Application //One client class for each user
                 hostName);
             System.exit(1);
         }
+    }
+
+    public String getInput()
+    {
+        //Scanner scan = new Scanner(System.in);
+        //clientInput = scan.next();
+        return clientInput;
+    }
+
+    public void setInput(String s)
+    {
+        clientInput = s;
     }
 
     /**
@@ -229,22 +252,6 @@ public class Client extends Application //One client class for each user
         HBox mOrF = new HBox(male, female, genderQueer);
         grid.add(mOrF, 0, 4);
 
-        //Creating the character
-        String charName = nameField.getText();  //SHOULD HAVE SCENARIO IN CASE LEFT BLANK
-        String charGender;
-        if(male.isSelected())
-        {
-            charGender = "male";
-        }
-        else if(female.isSelected())
-        {
-            charGender = "female";
-        }
-        else
-        {
-            charGender = "gender queer";
-        }
-
         //Horror Button
         Button horrorButton = new Button("Horror");
         grid.add(horrorButton, 0, 9);
@@ -254,6 +261,23 @@ public class Client extends Application //One client class for each user
             {
                 //Removing the buttons and pictures from the main scene
                 grid.getChildren().clear();
+
+                //Creating the character
+                String charName = nameField.getText();  //SHOULD HAVE SCENARIO IN CASE LEFT BLANK
+                System.out.println("charName = " + charName);
+                String charGender;
+                if(male.isSelected())
+                {
+                    charGender = "male";
+                }
+                else if(female.isSelected())
+                {
+                    charGender = "female";
+                }
+                else
+                {
+                    charGender = "gender queer";
+                }
 
                 //Creating character object
                 Character character = new Character(charName, charGender, 'H');
@@ -271,18 +295,49 @@ public class Client extends Application //One client class for each user
         grid.add(mysteryButton, 0, 8);
 
         //Creating the Mystery Story
+        System.out.println("Before pressing button");
         mysteryButton.setOnAction(
             (ActionEvent event) ->
             {
+                System.out.println("After pressing button");
                 //Removing the buttons and pictures from the main scene
                 grid.getChildren().clear();
+
+                //Creating the character
+                String charName = nameField.getText();  //SHOULD HAVE SCENARIO IN CASE LEFT BLANK
+                System.out.println("charName = " + charName);
+                String charGender;
+                if(male.isSelected())
+                {
+                    charGender = "male";
+                }
+                else if(female.isSelected())
+                {
+                    charGender = "female";
+                }
+                else
+                {
+                    charGender = "gender queer";
+                }
 
                 //Creating character object
                 Character character = new Character(charName, charGender, 'M');
 
                 //Updating the instruction Label
-                instruction.setText("Welcome to the Mystery Adventure");
+                instruction.setText("Welcome to the Mystery Adventure. Ready to Play?");
                 root.setStyle("-fx-font-size: 15");
+
+                TextField field = new TextField();
+                grid.add(field, 0, 2);
+
+                Button enter = new Button("Enter");
+                grid.add(enter, 1, 6);
+                enter.setOnAction(
+                    (ActionEvent event2) ->
+                    {
+                        setInput(field.getText());
+                    }
+                ); 
 
                 //Playing the game
                 playGame(character);
