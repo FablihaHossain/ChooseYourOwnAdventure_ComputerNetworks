@@ -173,10 +173,10 @@ public class Client extends Application //One client class for each user
             System.out.println(character.toString());
             outObject.reset();
             outObject.writeObject(character);
-            System.out.println("sent to server:");
+            //System.out.println("sent to server:");
 
             //Playing the game
-            System.out.println("Ready to Play the game?");
+            System.out.println("\nPress Any Key to Continue");
             //serverOutput = "Ready to Play the game?";
             //Getting the client input
             String input = getInput();
@@ -316,7 +316,7 @@ public class Client extends Application //One client class for each user
 
                 //Character Summary
                 instruction.setText("Welcome To The " + genre + " Adventure!\n" + character.toString());
-                root.setStyle("-fx-font-size: 15");
+                root.setStyle("-fx-font-size: 20");
 
                 Label ready = new Label("Ready to Play?");
                 grid.add(ready, 0, 1);
@@ -325,7 +325,7 @@ public class Client extends Application //One client class for each user
                 // grid.add(field, 0, 3);
 
                 Button yesButton = new Button("YES!");
-                grid.add(yesButton, 1, 3);
+                grid.add(yesButton, 1, 1);
                 yesButton.setOnAction(
                     (ActionEvent event2) ->
                     {

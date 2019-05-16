@@ -62,7 +62,7 @@ public class HorrorProtocol
             {
                 output = "“Who’s there?” You call out. You look around and try to keep your breathing low. You tighten " +
                 "your grip on your weapon and ask again. Suddenly, you hear a faint voice saying “Hello…” " +
-                "\nPress anything to continue";
+                "Press anything to continue";
                 gameStatus = "Scenario Three";
             }
             else if(input.equals("B"))
@@ -111,7 +111,6 @@ public class HorrorProtocol
                 "direction. You don’t even look back to see the damage, and you continue running until you are short of " +
                 "breath. As you are catching your breath, you feel a presence around you. You jump up and look behind to " +
                 "find Casper, unharmed. Do you swing your weapon again (C) or talk to him (B)?";
-                gameStatus = "Scenario Four part 2";
             }
             else if(input.equals("B"))
             {

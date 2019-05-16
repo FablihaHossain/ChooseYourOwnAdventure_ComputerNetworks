@@ -89,7 +89,8 @@ public class MysteryProtocol
             {
                 if(input.equals("X") || input.equals("Y"))
                 {
-                    output = "Going to the jewelary leaves you at a dead end. You decide to look at the security footage\n";
+                    output = "Going to the jewelary leaves you at a dead end. You decide to look at the security footage. Press Any "+
+                    "to continue\n";
                 }
                 output += "One of your team members requests video from TD Bank and looks through it during the time of the shooting. "+
                 "It appears that they did their best to hide their faces from the camera. They entered the bank as a normal civilian, "+
