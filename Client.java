@@ -19,7 +19,7 @@ import javafx.animation.*;
 import javafx.geometry.*;
 import java.io.*;
 import java.util.*;
-
+import javax.swing.JTextArea;
 import java.io.*;
 import java.net.*;
 /**
@@ -35,6 +35,9 @@ public class Client extends Application //One client class for each user
 
     String clientInput;
     String serverOutput;
+    String genre;
+    Character character;
+
     //The host name and port number that the client connects to in order to play the game
     //Note: This is here so that we can call the playGame method in GUI without passing parameters
     static String hostName;
@@ -166,19 +169,20 @@ public class Client extends Application //One client class for each user
             outObject.writeObject(character);
             System.out.println("sent to server:");
 
-            //Playing the game
-            //System.out.println("Ready to Play the game?");
-            serverOutput = "Ready to Play the game?";
-            String input = getInput();
-            //while(!(input = getInput()).equals(null))
-            while(input != null)
-            {
-                out.println(input);
-                String output = in.readLine();
-                serverOutput = output;
-                System.out.println(output);
-                input = getInput();
-            }
+            // //Playing the game
+            // //System.out.println("Ready to Play the game?");
+            // serverOutput = "Ready to Play the game?";
+            // String input = getInput();
+            // //while(!(input = getInput()).equals(null))
+            // while(input != null)
+            // {
+            // out.println(input);
+            // String output = in.readLine();
+            // serverOutput = output;
+            // System.out.println(output);
+            // input = getInput();
+            // }
+            play(out,in);
         }
         catch (UnknownHostException e) {
             System.err.println("Don't know about host " + hostName);
@@ -190,10 +194,32 @@ public class Client extends Application //One client class for each user
         }
     }
 
+    public void play(PrintWriter out, BufferedReader in)
+    {
+        try
+        {
+            serverOutput = "Ready to Play the game?";
+            String input = getInput();
+            //while(!(input = getInput()).equals(null))
+            while(input != null)
+            {
+                out.println(input);
+                String output = in.readLine();
+                serverOutput = output;
+                System.out.printf(output);
+                input = getInput();
+            }
+        } catch (IOException e) {
+            System.err.println("Couldn't get I/O for the connection to " +
+                hostName);
+            System.exit(1);
+        }
+    }
+
     public String getInput()
     {
-        //Scanner scan = new Scanner(System.in);
-        //clientInput = scan.next();
+        Scanner scan = new Scanner(System.in);
+        clientInput = scan.next();
         return clientInput;
     }
 
@@ -222,7 +248,7 @@ public class Client extends Application //One client class for each user
         pane.setPrefSize(600,600);
 
         root.setCenter(centerBox);
-        root.setStyle("-fx-font-size: 25"); 
+        root.setStyle("-fx-font-size: 20"); 
 
         //Grid Pane to organize
         GridPane grid = new GridPane();
@@ -232,7 +258,7 @@ public class Client extends Application //One client class for each user
 
         //Instruction Label
         Label instruction = new Label("\tWelcome to the Game! \nLet's Create Your Character:");
-        instruction.setFont(new Font("Helvetica", 25));
+        instruction.setFont(new Font("Helvetica", 20));
 
         //Character Name in Text Field
         Label characterName = new Label("Enter Your Character's Name:");
@@ -255,100 +281,95 @@ public class Client extends Application //One client class for each user
         HBox mOrF = new HBox(male, female, genderQueer);
         grid.add(mOrF, 0, 4);
 
-        //Horror Button
-        Button horrorButton = new Button("Horror");
-        grid.add(horrorButton, 0, 9);
-
-        horrorButton.setOnAction(
-            (ActionEvent event) ->
+        //Choice between the two Genres
+        ComboBox<String> genres = new ComboBox<String>();
+        genres.getItems().addAll("Mystery", "Horror");
+        genres.valueProperty().addListener(
+            (ObservableValue<? extends String> ov, String oldValue, String newValue) -> 
             {
-                //Removing the buttons and pictures from the main scene
-                grid.getChildren().clear();
-
-                //Creating the character
-                String charName = nameField.getText();  //SHOULD HAVE SCENARIO IN CASE LEFT BLANK
-                System.out.println("charName = " + charName);
-                String charGender;
-                if(male.isSelected())
+                if(newValue.equals("Mystery"))
                 {
-                    charGender = "male";
+                    genre = "Mystery";
                 }
-                else if(female.isSelected())
+                else if(newValue.equals("Horror"))
                 {
-                    charGender = "female";
+                    genre = "Horror";
                 }
                 else
                 {
-                    charGender = "gender queer";
+                    genre = "Mystery"; //Default if no genre choosen
                 }
-
-                //Creating character object
-                Character character = new Character(charName, charGender, 'H');
-
-                //Updating the instruction Label
-                instruction.setText("Welcome to the Horror Adventure");
-                root.setStyle("-fx-font-size: 15");  
-
-                //Playing the game
-                playGame(character);
-            }
+            }   
         );
-        //Mystery Button
-        Button mysteryButton = new Button("Mystery");
-        grid.add(mysteryButton, 0, 8);
 
-        //Creating the Mystery Story
-        System.out.println("Before pressing button");
-        mysteryButton.setOnAction(
+        //Genre of Choice
+        Label genreLabel = new Label("Which Genre Would You Like to Play?:");
+        genres.setValue("Choose Genre");
+
+        grid.add(genreLabel, 0, 8);
+        grid.add(genres, 0, 9);
+
+        //Create Character Button
+        Button createCharacter = new Button("Create Your Character");
+        grid.add(createCharacter, 0, 10);
+
+        createCharacter.setOnAction(
             (ActionEvent event) ->
             {
-                System.out.println("After pressing button");
-                //Removing the buttons and pictures from the main scene
+                //Clearing the grid
                 grid.getChildren().clear();
 
                 //Creating the character
                 String charName = nameField.getText();
-                System.out.println("charName = " + charName);
                 String charGender;
                 if(male.isSelected())
                 {
-                    charGender = "male";
+                    charGender = "Male";
                 }
                 else if(female.isSelected())
                 {
-                    charGender = "female";
+                    charGender = "Female";
                 }
                 else
                 {
-                    charGender = "gender queer";
+                    charGender = "Gender Queer";
                 }
-
+                char g = genre.charAt(0);
                 //Creating character object
-                Character character = new Character(charName, charGender, 'M');
+                Character character = new Character(charName, charGender, g);
 
-                //Updating the instruction Label
-                instruction.setText("Welcome to the Mystery Adventure. \nReady to Play the Game?");
+                //Character Summary
+                instruction.setText("Welcome To The " + genre + " Adventure!\n" + character.toString());
                 root.setStyle("-fx-font-size: 15");
 
-                TextField field = new TextField();
-                grid.add(field, 0, 2);
+                Label ready = new Label("Ready to Play?");
+                grid.add(ready, 0, 1);
+
+                // TextField field = new TextField();
+                // grid.add(field, 0, 3);
 
                 Button yesButton = new Button("YES!");
                 grid.add(yesButton, 1, 3);
                 yesButton.setOnAction(
                     (ActionEvent event2) ->
                     {
+                        //clientInput = field.getText();
+
                         //Playing the game
                         playGame(character);
-                        while(serverOutput != null)
-                        {
-                            instruction.setText(serverOutput);
-                            clientInput = field.getText();
-                        }
+
+                        instruction.setText(serverOutput);
+                        //grid.add(field, 0, 2);
+                        // if(serverOutput != null && clientInput != null)
+                        // {
+                        // instruction.setText(serverOutput);
+                        // clientInput = field.getText();
+                        // }
                     }
                 ); 
             }
         );
+
         //Menu Bar
         MenuBar menuBar = new MenuBar();
         root.setTop(menuBar);

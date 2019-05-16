@@ -52,8 +52,7 @@ public class Character implements Serializable
 
     public String toString()
     {
-        String output = "Character Name: " + this.name + "\nCharacter Gender: " + this.gender + "\nGenre Choosen: " +
-            this.genreChoosen;
+        String output = "Character Name: " + this.name + "\nCharacter Gender: " + this.gender;
         return output;
     }
 }
