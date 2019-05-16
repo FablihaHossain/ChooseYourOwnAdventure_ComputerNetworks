@@ -8,22 +8,21 @@ import java.io.*;
 public class MultiServerThread extends Thread {
     private Socket socket = null;
 
+    //Trying to establish a connection
     public MultiServerThread(Socket socket) {
         super("KKMultiServerThread");
         this.socket = socket;
     }
 
-    public void run() {
+    public void run() { 
         try (
         PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
         BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         //Option to read in objects
         ObjectInputStream inObject = new ObjectInputStream((socket.getInputStream()));
         ) {
-            // //Displaying Genre Options 
-            // System.out.println("Mystery Adventure: Case will involve a couple that claim to be the new and improved version of Bonnie and Clyde");
+            //Displaying Genre Options 
             MysteryProtocol mysteryGenre = new MysteryProtocol(); //Mystery Protocol
-            // System.out.println("Horror Adventure Description here");
             HorrorProtocol horrorGenre = new HorrorProtocol(); //Horror Protocol
 
             //Variables to be used
@@ -33,42 +32,53 @@ public class MultiServerThread extends Thread {
 
             //while((inputLine = in.readLine()) != null || (inputLine = (Character)inObject.readObject()) != null)
             //{
+
             //Reading in the user's genre choice (for the rapid prototype)
             //inputLine = in.readLine();
 
             //Character Object
             //System.out.println("Please Create Your Character");
-            System.out.println("tes0");
             character = (Character)inObject.readObject();
-            System.out.println("Test1");
-            System.out.println(character.getName());
+            System.out.println(character.toString());
 
             //Calling the correct protocol
             while((inputLine = in.readLine()) != null)
             {
-                if(character.getGenre() == 'M')
+                if(character.getGenre() == 'M') //Mystery Genre Protocol
                 {
+                    //Displaying on the server side what the client choose/input
                     System.out.println("User Choose: " + inputLine);
+                    
+                    //Calling the mystery protocol
                     outputLine = mysteryGenre.processInput(inputLine, character);
+                    
+                    //Sending the output to the client
                     out.println(outputLine);
-                    //out.println("first");
-                    //out.println("last");
+                    
+                    //Displaying the client's progress throughout the game
                     System.out.println();
                 }
-                else if(character.getGenre() == 'H')
+                else if(character.getGenre() == 'H') //Horror Genre Protocol
                 {
+                    //Displaying on the server side what the client choose/input
+                    System.out.println("User Choose: " + inputLine);
+                    
+                    //Calling the mystery protocol
                     outputLine = horrorGenre.processInput(inputLine, character);
-                    System.out.println(outputLine);
-                    //out.println(outputLine);
+                    
+                    //Sending the output to the client
+                    out.println(outputLine);
+                    
+                    //Displaying the client's progress throughout the game
+                    System.out.println();
                 }
                 else
                 {
                     System.out.println("Error...");
                 }
-
-                if (inputLine.equals("Bye"))
-                    break;
             }
+            
+            //Closing the socket and connection
             socket.close();
         } catch (IOException e) {
             e.printStackTrace();

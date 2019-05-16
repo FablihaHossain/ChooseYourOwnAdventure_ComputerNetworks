@@ -61,7 +61,8 @@ public class HorrorProtocol
             if(input.equals("A")|| input.equals("C"))
             {
                 output = "“Who’s there?” You call out. You look around and try to keep your breathing low. You tighten " +
-                "your grip on your weapon and ask again. Suddenly, you hear a faint voice saying “Hello…”";
+                "your grip on your weapon and ask again. Suddenly, you hear a faint voice saying “Hello…” " +
+                "\nPress anything to continue";
                 gameStatus = "Scenario Three";
             }
             else if(input.equals("B"))

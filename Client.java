@@ -19,7 +19,7 @@ import javafx.animation.*;
 import javafx.geometry.*;
 import java.io.*;
 import java.util.*;
-import javax.swing.JTextArea;
+
 import java.io.*;
 import java.net.*;
 /**
@@ -30,18 +30,23 @@ import java.net.*;
  */
 public class Client extends Application //One client class for each user
 {
-    //A log file that records the user's choices throughout the game
-    File logFile = new File("logFile");
-
-    String clientInput;
-    String serverOutput;
-    String genre;
-    Character character;
-
     //The host name and port number that the client connects to in order to play the game
     //Note: This is here so that we can call the playGame method in GUI without passing parameters
     static String hostName;
     static int portNumber;
+
+    //Keeping Track of Client Input
+    String clientInput;
+
+    //Keeping Track of Server Output
+    String serverOutput;
+
+    //Genre the User Chooses
+    String genre;
+
+    //User's character object
+    Character character;
+
     public static void main(String args[]) throws IOException
     {
         if (args.length != 2) {
@@ -49,6 +54,7 @@ public class Client extends Application //One client class for each user
                 "Usage: java EchoClient <host name> <port number>");
             System.exit(1);
         }
+
         //Client is going to initiate a connection request to the server's 
         //IP address and port
         hostName = args[0];
@@ -60,12 +66,11 @@ public class Client extends Application //One client class for each user
 
     /**
      * playGamePrototype The method that has the rapid prototype code where the client and server simply
-     * exchange messages
+     * exchange string messages through the terminal
      */
     public void playGamePrototype()
     {
-        //Output value to display on the GUI application
-        //String output = "Play game";
+        //Getting the host name and port number of the server
         String hostName = getHostName();
         int portNumber = getPortNumber();
         try (
@@ -118,15 +123,16 @@ public class Client extends Application //One client class for each user
 
             //Playing the game
             System.out.println("Ready to Play the game?");
-            String input;
+            String input; //Reading in the client's input
             while((input = stdIn.readLine()) != null)
             {
+                //Sending the client input to the server
                 out.println(input);
-                // System.out.println("sent to server");
+                //System.out.println("sent to server");
+
+                //Reading the output from server
                 String output = in.readLine();
-                serverOutput = output;
                 System.out.println(output);
-                //return output;
             }
         }
         catch (UnknownHostException e) {
@@ -141,8 +147,8 @@ public class Client extends Application //One client class for each user
     }
 
     /**
-     * playGame The Method that implements the GUI enhancements
-     * User is able to play the game, and save their progress through the log files
+     * playGame The Method that implements the GUI enhancements (or tries to)
+     * @param: A character object
      */
     public void playGame(Character character)
     {
@@ -169,20 +175,24 @@ public class Client extends Application //One client class for each user
             outObject.writeObject(character);
             System.out.println("sent to server:");
 
-            // //Playing the game
-            // //System.out.println("Ready to Play the game?");
-            // serverOutput = "Ready to Play the game?";
-            // String input = getInput();
-            // //while(!(input = getInput()).equals(null))
-            // while(input != null)
-            // {
-            // out.println(input);
-            // String output = in.readLine();
-            // serverOutput = output;
-            // System.out.println(output);
-            // input = getInput();
-            // }
-            play(out,in);
+            //Playing the game
+            System.out.println("Ready to Play the game?");
+            //serverOutput = "Ready to Play the game?";
+            //Getting the client input
+            String input = getInput();
+            while(input != null)
+            {
+                //Sending the client's input to server
+                out.println(input);
+
+                //Getting the server's output response
+                String output = in.readLine();
+                serverOutput = output;
+                System.out.println(output);
+
+                //Getting the next client input
+                input = getInput();
+            }
         }
         catch (UnknownHostException e) {
             System.err.println("Don't know about host " + hostName);
@@ -192,40 +202,6 @@ public class Client extends Application //One client class for each user
                 hostName);
             System.exit(1);
         }
-    }
-
-    public void play(PrintWriter out, BufferedReader in)
-    {
-        try
-        {
-            serverOutput = "Ready to Play the game?";
-            String input = getInput();
-            //while(!(input = getInput()).equals(null))
-            while(input != null)
-            {
-                out.println(input);
-                String output = in.readLine();
-                serverOutput = output;
-                System.out.printf(output);
-                input = getInput();
-            }
-        } catch (IOException e) {
-            System.err.println("Couldn't get I/O for the connection to " +
-                hostName);
-            System.exit(1);
-        }
-    }
-
-    public String getInput()
-    {
-        Scanner scan = new Scanner(System.in);
-        clientInput = scan.next();
-        return clientInput;
-    }
-
-    public void setInput(String s)
-    {
-        clientInput = s;
     }
 
     /**
@@ -389,7 +365,6 @@ public class Client extends Application //One client class for each user
         quit.setAccelerator(
             (new KeyCodeCombination(KeyCode.Q, KeyCombination.CONTROL_DOWN)));
 
-        //quit.setGraphic( new ImageView( new Image("icons/door_out.png")));
         quit.setOnAction( (ActionEvent event) -> System.exit(0));
 
         //About This Program
@@ -398,8 +373,6 @@ public class Client extends Application //One client class for each user
 
         program.setAccelerator(
             (new KeyCodeCombination(KeyCode.A, KeyCombination.CONTROL_DOWN)));
-
-        //program.setGraphic( new ImageView( new Image("icons/information.png")));
 
         program.setOnAction(
             (ActionEvent event) ->
@@ -424,14 +397,38 @@ public class Client extends Application //One client class for each user
         mainStage.show();
     }
 
+    /**
+     * getHostName A method that returns the host name of the client server connection
+     */
     public static String getHostName()
     {
         return hostName;
     }
 
+    /**
+     * getPortNumber A method that returns the port number of the client server connection
+     */
     public static int getPortNumber()
     {
         return portNumber;
+    }
+
+    /**
+     * getInput: A method that uses the Scanner object to get the client's input
+     */    
+    public String getInput()
+    {
+        Scanner scan = new Scanner(System.in);
+        clientInput = scan.next();
+        return clientInput;
+    }
+
+    /**
+     * setInput: A method that sends the client input
+     */
+    public void setInput(String s)
+    {
+        clientInput = s;
     }
 }
 

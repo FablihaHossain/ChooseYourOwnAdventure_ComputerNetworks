@@ -19,37 +19,63 @@ public class Character implements Serializable
         this.genreChoosen = genre;
     }
 
-    //Getter and setter methods
+    /**
+     * getName A method that gets the name of the character object
+     * @returns The name of the character
+     */
     public String getName()
     {
         return this.name;
     }
-
+    
+    /**
+     * getGender A method that gets the gender of the character object
+     * @returns The gender of the character
+     */
     public String getGender()
     {
         return this.gender;
     }
 
+    /**
+     * setName A method that sets the name of the character object
+     * @param The name of the character
+     */
     public void setName(String n)
     {
         this.name = n;
-    }
+    }    
 
+    /**
+     * setGender A method that sets the gender of the character object
+     * @param The gender of the character
+     */
     public void setGender(String g)
     {
         this.gender = g;
     }
 
+    /**
+     * getGenre: A method that gets the genre of the character object (choosen by user)
+     * @returns The genre of the character
+     */
     public char getGenre()
     {
         return this.genreChoosen;
     }
 
+    /**
+     * setGenre: A method that sets the genre of the character object (choosen by user)
+     * @param The genre of the character
+     */
     public void setGenre(char g)
     {
         this.genreChoosen = g;
     }
 
+    /**
+     * toString: A method that displays the attributes of the character object
+     */
     public String toString()
     {
         String output = "Character Name: " + this.name + "\nCharacter Gender: " + this.gender;
