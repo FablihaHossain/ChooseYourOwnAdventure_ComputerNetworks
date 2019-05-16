@@ -33,7 +33,7 @@ public class MultiServerThread extends Thread {
 
             //while((inputLine = in.readLine()) != null || (inputLine = (Character)inObject.readObject()) != null)
             //{
-            //Reading in the user's genre choice
+            //Reading in the user's genre choice (for the rapid prototype)
             //inputLine = in.readLine();
 
             //Character Object

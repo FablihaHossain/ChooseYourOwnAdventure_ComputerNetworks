@@ -10,8 +10,6 @@ public class Character implements Serializable
     private String name;
     private String gender;
     private char genreChoosen;
-    private String[] inventory;
-    private int numOfItems = 0;
 
     //Constructor
     public Character(String name, String gender, char genre)
@@ -19,24 +17,6 @@ public class Character implements Serializable
         this.name = name;
         this.gender = gender;
         this.genreChoosen = genre;
-    }
-
-    //A method to fill the user's inventory with intial items based on the genre choosen
-    private void intialInventory(char genre)
-    {
-        //Filling bag based on genre choosen
-        if(genre == 'A')
-        {
-            //to be filled later
-        }
-        else if(genre == 'M')
-        {
-            //to be filled later
-        }
-        else
-        {
-            //to be filled later
-        }
     }
 
     //Getter and setter methods
@@ -64,22 +44,16 @@ public class Character implements Serializable
     {
         return this.genreChoosen;
     }
-    
+
     public void setGenre(char g)
     {
         this.genreChoosen = g;
     }
-    
+
     public String toString()
     {
         String output = "Character Name: " + this.name + "\nCharacter Gender: " + this.gender + "\nGenre Choosen: " +
-        this.genreChoosen;
+            this.genreChoosen;
         return output;
-    }
-    //Method to add to inventory
-    public void addInventory(String item)
-    {
-        inventory[numOfItems] = item;
-        numOfItems++;
     }
 }

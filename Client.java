@@ -20,7 +20,6 @@ import javafx.geometry.*;
 import java.io.*;
 import java.util.*;
 
-import javax.swing.JOptionPane;
 import java.io.*;
 import java.net.*;
 /**
@@ -35,6 +34,7 @@ public class Client extends Application //One client class for each user
     File logFile = new File("logFile");
 
     String clientInput;
+    String serverOutput;
     //The host name and port number that the client connects to in order to play the game
     //Note: This is here so that we can call the playGame method in GUI without passing parameters
     static String hostName;
@@ -121,6 +121,7 @@ public class Client extends Application //One client class for each user
                 out.println(input);
                 // System.out.println("sent to server");
                 String output = in.readLine();
+                serverOutput = output;
                 System.out.println(output);
                 //return output;
             }
@@ -167,12 +168,14 @@ public class Client extends Application //One client class for each user
 
             //Playing the game
             //System.out.println("Ready to Play the game?");
-            String input = clientInput;
+            serverOutput = "Ready to Play the game?";
+            String input = getInput();
             //while(!(input = getInput()).equals(null))
             while(input != null)
             {
                 out.println(input);
                 String output = in.readLine();
+                serverOutput = output;
                 System.out.println(output);
                 input = getInput();
             }
@@ -304,7 +307,7 @@ public class Client extends Application //One client class for each user
                 grid.getChildren().clear();
 
                 //Creating the character
-                String charName = nameField.getText();  //SHOULD HAVE SCENARIO IN CASE LEFT BLANK
+                String charName = nameField.getText();
                 System.out.println("charName = " + charName);
                 String charGender;
                 if(male.isSelected())
@@ -324,23 +327,26 @@ public class Client extends Application //One client class for each user
                 Character character = new Character(charName, charGender, 'M');
 
                 //Updating the instruction Label
-                instruction.setText("Welcome to the Mystery Adventure. Ready to Play?");
+                instruction.setText("Welcome to the Mystery Adventure. \nReady to Play the Game?");
                 root.setStyle("-fx-font-size: 15");
 
                 TextField field = new TextField();
                 grid.add(field, 0, 2);
 
-                Button enter = new Button("Enter");
-                grid.add(enter, 1, 6);
-                enter.setOnAction(
+                Button yesButton = new Button("YES!");
+                grid.add(yesButton, 1, 3);
+                yesButton.setOnAction(
                     (ActionEvent event2) ->
                     {
-                        setInput(field.getText());
+                        //Playing the game
+                        playGame(character);
+                        while(serverOutput != null)
+                        {
+                            instruction.setText(serverOutput);
+                            clientInput = field.getText();
+                        }
                     }
                 ); 
-
-                //Playing the game
-                playGame(character);
             }
         );
         //Menu Bar
